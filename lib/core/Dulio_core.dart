@@ -1,67 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
+import 'package:dulio/app_theme.dart';
+import 'package:image_picker/image_picker.dart';
 
-late List<CameraDescription> _cameras;
+// Create two widgets that allow the user to open an image from the gallery
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  _cameras = await availableCameras();
-  runApp(Dulio_ar());
-}
-
-//Dulio_ar() is the main class for the AR feature
-class Dulio_ar extends StatefulWidget {
-  const Dulio_ar({Key? key}) : super(key: key);
+class Dulio_core extends StatefulWidget {
+  const Dulio_core({Key? key}) : super(key: key);
 
   @override
-  _Dulio_arState createState() => _Dulio_arState();
+  _Dulio_coreState createState() => _Dulio_coreState();
 }
 
-class _Dulio_arState extends State<Dulio_ar> {
-  late CameraController controller;
+class _Dulio_coreState extends State<Dulio_core> {
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-  @override
-  void initState() {
-    super.initState();
-    availableCameras().then((cameras) {
-      _cameras = cameras;
-      controller = CameraController(_cameras[0], ResolutionPreset.max);
-      controller.initialize().then((_) {
-        if (!mounted) {
-          return;
-        }
-        setState(() {});
-      }).catchError((Object e) {
-        if (e is CameraException) {
-          switch (e.code) {
-            case 'CameraAccessDenied':
-              // Handle access errors here.
-              break;
-            default:
-              // Handle other errors here.
-              break;
-          }
-        }
-      });
+    setState(() {
+      if (pickedFile != null) {
+      } else {
+        print('No image selected.');
+      }
     });
-  }
-
-  late List<CameraDescription> _cameras;
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return Container();
-    }
-    return AspectRatio(
-      aspectRatio: controller.value.aspectRatio,
-      child: CameraPreview(controller),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Dulio Core',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: AppTheme.nearlyWhite,
+          ),
+        ),
+        backgroundColor: AppTheme.nearlyBlack,
+        iconTheme: const IconThemeData(
+            color: AppTheme
+                .nearlyWhite), // added this line to change the back arrow color
+      ),
+      body: Material(
+        color: AppTheme.nearlyBlack,
+        child: Center(
+          child: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: ElevatedButton(
+              onPressed: _getImage,
+              child: const Text('Select Image'),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
