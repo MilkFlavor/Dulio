@@ -1,26 +1,46 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:dulio/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'ar/ar.dart';
 
 // Create two widgets that allow the user to open an image from the gallery
 
-class Dulio_core extends StatefulWidget {
-  const Dulio_core({Key? key}) : super(key: key);
+class DulioCore extends StatefulWidget {
+  const DulioCore({Key? key}) : super(key: key);
 
   @override
-  _Dulio_coreState createState() => _Dulio_coreState();
+  _DulioCoreState createState() => _DulioCoreState();
 }
 
-class _Dulio_coreState extends State<Dulio_core> {
+class _DulioCoreState extends State<DulioCore> {
+  XFile? _imageFile;
+  CameraDescription? firstCamera;
+
+  @override
+  void initState() {
+    super.initState();
+    main();
+  }
+
+  Future<void> main() async {
+    // Ensure that plugin services are initialized so that `availableCameras()`
+    // can be called before `runApp()`
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    firstCamera = cameras.first;
+  }
+
   Future<void> _getImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      if (pickedFile != null) {
-      } else {
-        print('No image selected.');
-      }
+      _imageFile = pickedFile;
     });
   }
 
@@ -48,11 +68,25 @@ class _Dulio_coreState extends State<Dulio_core> {
             width: double.infinity,
             height: double.infinity,
             child: ElevatedButton(
-              onPressed: _getImage,
+              onPressed: () async {
+                await _getImage();
+                if (_imageFile != null && firstCamera != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ar_dulio_core(camera: firstCamera!),
+                    ),
+                  );
+                }
+              },
               child: const Text('Select Image'),
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.camera_alt),
       ),
     );
   }

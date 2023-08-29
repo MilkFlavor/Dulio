@@ -3,14 +3,10 @@ import 'package:dulio/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'navigation_home_screen.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
-late List<CameraDescription> _cameras;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _cameras = await availableCameras();
   runApp(MyApp());
 }
 
