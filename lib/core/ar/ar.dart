@@ -29,7 +29,9 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
       // Get a specific camera from the list of available cameras.
       widget.camera,
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      ResolutionPreset.max,
+      // No audio recording necessary.
+      enableAudio: false,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -54,7 +56,16 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
+            return Center(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  child: CameraPreview(_controller),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                ),
+              ),
+            );
           } else {
             // Otherwise, display a loading indicator.
             return const Center(child: CircularProgressIndicator());

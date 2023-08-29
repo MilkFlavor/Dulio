@@ -47,47 +47,43 @@ class _DulioCoreState extends State<DulioCore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Dulio Core',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: AppTheme.nearlyWhite,
-          ),
-        ),
-        backgroundColor: AppTheme.nearlyBlack,
-        iconTheme: const IconThemeData(
-            color: AppTheme
-                .nearlyWhite), // added this line to change the back arrow color
-      ),
-      body: Material(
-        color: AppTheme.nearlyBlack,
-        child: Center(
-          child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: ElevatedButton(
-              onPressed: () async {
-                await _getImage();
-                if (_imageFile != null && firstCamera != null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ar_dulio_core(camera: firstCamera!),
-                    ),
-                  );
-                }
-              },
-              child: const Text('Select Image'),
+        appBar: AppBar(
+          title: const Text(
+            'Dulio Core',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppTheme.nearlyWhite,
             ),
           ),
+          backgroundColor: AppTheme.nearlyBlack,
+          iconTheme: const IconThemeData(
+              color: AppTheme
+                  .nearlyWhite), // added this line to change the back arrow color
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.camera_alt),
-      ),
-    );
+        body: Material(
+          color: AppTheme.nearlyBlack,
+          child: Center(
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await _getImage();
+                  if (_imageFile != null && firstCamera != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ar_dulio_core(camera: firstCamera!),
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Select Image'),
+              ),
+            ),
+          ),
+        ));
   }
 }
