@@ -25,7 +25,6 @@ class _DulioCoreState extends State<DulioCore> {
 
   Future<void> main() async {
     // Ensure that plugin services are initialized so that `availableCameras()`
-    // can be called before `runApp()`
     WidgetsFlutterBinding.ensureInitialized();
 
     // Obtain a list of the available cameras on the device.
@@ -74,8 +73,8 @@ class _DulioCoreState extends State<DulioCore> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ar_dulio_core(camera: firstCamera!),
+                        builder: (context) => ar_dulio_core(
+                            camera: firstCamera!, imagePath: _imageFile!.path),
                       ),
                     );
                   }

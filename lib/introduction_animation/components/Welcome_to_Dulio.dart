@@ -49,6 +49,10 @@ class _SplashViewState extends State<SplashView> {
               child: Text(
                 "The best place to help learn and practice art",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppTheme.grey,
+                  fontSize: 18.0,
+                ),
               ),
             ),
             SizedBox(

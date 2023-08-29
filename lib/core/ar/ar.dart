@@ -8,9 +8,11 @@ class ar_dulio_core extends StatefulWidget {
   const ar_dulio_core({
     super.key,
     required this.camera,
+    required this.imagePath,
   });
 
   final CameraDescription camera;
+  final String imagePath;
 
   @override
   ar_dulio_coreState createState() => ar_dulio_coreState();
