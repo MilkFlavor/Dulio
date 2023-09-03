@@ -23,6 +23,8 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
   double _opacity = 0.5;
+  double _scale = 1.0;
+  double _rotation = 0.0;
 
   @override
   void initState() {
@@ -47,6 +49,12 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
     // Dispose of the controller when the widget is disposed.
     _controller.dispose();
     super.dispose();
+  }
+
+  void _rotateImage() {
+    setState(() {
+      _rotation += 90.0;
+    });
   }
 
   @override
@@ -85,17 +93,33 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Opacity(
                     opacity: _opacity, // Change the opacity value here
-                    child: InteractiveViewer(
-                      constrained: false,
-                      child: FittedBox(
-                        fit: BoxFit.cover,
-                        child: SizedBox(
-                          width: _controller.value.previewSize!.height,
-                          height: _controller.value.previewSize!.width,
-                          child: AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: Image.file(
-                              File(widget.imagePath),
+                    child: GestureDetector(
+                      onScaleUpdate: (details) {
+                        setState(() {
+                          _scale = details.scale;
+                          _rotation = details.rotation;
+                        });
+                      },
+                      child: InteractiveViewer(
+                        constrained: false,
+                        maxScale: 10,
+                        minScale: 0.01,
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: AspectRatio(
+                              aspectRatio: _controller.value.aspectRatio,
+                              child: RotationTransition(
+                                turns: AlwaysStoppedAnimation(_rotation / 360),
+                                child: Transform.scale(
+                                  scale: _scale,
+                                  child: Image.file(
+                                    File(widget.imagePath),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -112,15 +136,24 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Slider(
-              value: _opacity,
-              min: 0,
-              max: 1,
-              onChanged: (value) {
-                setState(() {
-                  _opacity = value;
-                });
-              },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Slider(
+                  value: _opacity,
+                  min: 0,
+                  max: 1,
+                  onChanged: (value) {
+                    setState(() {
+                      _opacity = value;
+                    });
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: _rotateImage,
+                  child: Icon(Icons.rotate_right),
+                ),
+              ],
             ),
           ),
         ],
