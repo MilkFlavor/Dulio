@@ -22,6 +22,7 @@ class ar_dulio_core extends StatefulWidget {
 class ar_dulio_coreState extends State<ar_dulio_core> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+  double _opacity = 0.5;
 
   @override
   void initState() {
@@ -82,15 +83,21 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
               future: _initializeControllerFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  return FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: _controller.value.previewSize!.height,
-                      height: _controller.value.previewSize!.width,
-                      child: AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: Image.file(
-                          File(widget.imagePath),
+                  return Opacity(
+                    opacity: _opacity, // Change the opacity value here
+                    child: InteractiveViewer(
+                      constrained: false,
+                      child: FittedBox(
+                        fit: BoxFit.cover,
+                        child: SizedBox(
+                          width: _controller.value.previewSize!.height,
+                          height: _controller.value.previewSize!.width,
+                          child: AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: Image.file(
+                              File(widget.imagePath),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -98,6 +105,21 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
                 } else {
                   return Container();
                 }
+              },
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Slider(
+              value: _opacity,
+              min: 0,
+              max: 1,
+              onChanged: (value) {
+                setState(() {
+                  _opacity = value;
+                });
               },
             ),
           ),
