@@ -86,7 +86,13 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
             },
           ),
           // Show the image on top of the camera preview.
-          Positioned.fill(
+          Positioned(
+            top: null,
+            bottom: null,
+            left: null,
+            right: null,
+            height: null,
+            width: null,
             child: FutureBuilder<void>(
               future: _initializeControllerFuture,
               builder: (context, snapshot) {
@@ -102,8 +108,6 @@ class ar_dulio_coreState extends State<ar_dulio_core> {
                       },
                       child: InteractiveViewer(
                         constrained: false,
-                        maxScale: 10,
-                        minScale: 0.01,
                         child: FittedBox(
                           fit: BoxFit.cover,
                           child: SizedBox(

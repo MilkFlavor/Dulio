@@ -4,7 +4,6 @@ import 'package:dulio/custom_drawer/home_drawer.dart';
 import 'package:dulio/feedback_screen.dart';
 import 'package:dulio/help_screen.dart';
 import 'package:dulio/home_screen.dart';
-import 'package:dulio/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
@@ -64,11 +63,6 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         case DrawerIndex.FeedBack:
           setState(() {
             screenView = FeedbackScreen();
-          });
-          break;
-        case DrawerIndex.Invite:
-          setState(() {
-            screenView = InviteFriend();
           });
           break;
         default:

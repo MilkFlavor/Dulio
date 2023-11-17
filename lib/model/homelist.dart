@@ -15,7 +15,7 @@ class HomeList {
     ),
     // Create a widget that allows the user to open an image from the gallery
     HomeList(
-        imagePath: 'assets/introduction_animation/introduction_animation.png',
+        imagePath: 'assets/introduction_animation/camera.png',
         navigateScreen: DulioCore()),
   ];
 }
