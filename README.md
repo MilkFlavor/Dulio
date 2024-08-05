@@ -56,11 +56,8 @@ $ flutter install
 
 This software uses the following open source packages:
 
-- [Electron](http://electron.atom.io/)
-- [Node.js](https://nodejs.org/)
-- [showdown](http://showdownjs.github.io/showdown/)
-- [CodeMirror](http://codemirror.net/)
-- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
+- [Flutter](https://flutter.dev/)
+- Emojis are taken from [here](https://www.flaticon.com/)
 
 ## License
 
