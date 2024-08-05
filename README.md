@@ -68,6 +68,6 @@ MIT
 
 ---
 
-> [amitmerchant.com](https://www.amitmerchant.com) &nbsp;&middot;&nbsp;
-> GitHub [@amitmerchant1990](https://github.com/MilkFlavor) &nbsp;&middot;&nbsp;
+> shibashish785@gmail.com
+> GitHub [@MilkFlavor](https://github.com/MilkFlavor) &nbsp;&middot;&nbsp;
 
